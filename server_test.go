@@ -196,3 +196,64 @@ func TestGetPriceTarget(t *testing.T) {
 		t.Errorf("Expected 28, got %d", sum)
 	}
 }
+
+func TestGetPriceMarket(t *testing.T) {
+	sum := 0
+
+	retailer := "M&M Corner Market"
+	day := 20
+	purchaseHour := 14
+	total := 9.00
+	items := make([]Item, 4)
+
+	item1 := new(Item)
+	item1.ShortDescription = "Gatorade"
+	item1.Price = "2.25"
+
+	items[0] = *item1
+	items[1] = *item1
+	items[2] = *item1
+	items[3] = *item1
+
+	one := ruleOne(&retailer)
+	two := ruleTwo(&total)
+	three := ruleThree(&total)
+	four := ruleFour(&items)
+	five := ruleFive(&items)
+	six := ruleSix(&day)
+	seven := ruleSeven(&purchaseHour)
+
+	if one != 14 {
+		t.Errorf("Expected 14 for rule one, got %d", one)
+	}
+
+	if two != 50 {
+		t.Errorf("Expected 50 for rule two, got %d", two)
+	}
+
+	if three != 25 {
+		t.Errorf("Expected 25 for rule three, got %d", three)
+	}
+
+	if four != 10 {
+		t.Errorf("Expected 10 for rule four, got %d", four)
+	}
+
+	if five != 0 {
+		t.Errorf("Expected 0 for rule five, got %d", five)
+	}
+
+	if six != 0 {
+		t.Errorf("Expected 0 for rule six, got %d", six)
+	}
+
+	if seven != 10 {
+		t.Errorf("Expected 10 for rule seven, got %d", seven)
+	}
+
+	sum = one + two + three + four + five + six + seven
+
+	if sum != 109 {
+		t.Errorf("Expected 109, got %d", sum)
+	}
+}
