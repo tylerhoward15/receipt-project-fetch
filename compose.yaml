@@ -1,0 +1,7 @@
+services:
+  fetch-receipt:
+    container_name: receipt-fetch
+    build: .
+    ports:
+      - "1323:1323"
+    image: "receipt-project-fetch"

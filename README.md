@@ -4,6 +4,10 @@
 
 2. `docker run --rm -p 1323:1323 receipt-project-fetch`
 
+#### OR
+
+1. `docker-compose up`
+
 # Testing
 
 `go test -v`
