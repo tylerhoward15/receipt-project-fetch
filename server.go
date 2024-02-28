@@ -100,6 +100,9 @@ func ruleFive(items *[]Item) int {
 
 func getScore(item *Item) int {
 	descLen := len((*item).ShortDescription)
+	if descLen == 0 {
+		return 0
+	}
 
 	if descLen%3 == 0 {
 		price, err := strconv.ParseFloat(item.Price, 64)
