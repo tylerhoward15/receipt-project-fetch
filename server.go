@@ -127,7 +127,7 @@ func ruleSix(purchaseDay *int) int {
 
 func ruleSeven(purchaseHour *int) int {
 	// 10 points if the time of purchase is after 2:00pm and before 4:00pm
-	if *purchaseHour > 14 && *purchaseHour < 16 {
+	if *purchaseHour >= 14 && *purchaseHour < 16 {
 		return 10
 	}
 
