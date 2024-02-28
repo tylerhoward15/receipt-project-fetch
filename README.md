@@ -17,3 +17,7 @@ You can use the endpoints exactly as specified in the documentation! Using a too
 - `GET http://localhost:1323/receipts/{id}/points` - returns the points for the receipt with the passed in id (if it exists).
 - `POST http://localhost:1323/receipts/process` - returns the id of the receipt that was processed if it was successful, or an error if it was not.
 - `GET http://localhost:1323/receipts/` - an extra endpoint that returns all the receipts in the database that was helpful for troubleshooting (this would not be in a production environment). This can be helpful for you to verify the JSON representation.
+
+#### Challenge
+
+https://github.com/fetch-rewards/receipt-processor-challenge
