@@ -68,7 +68,7 @@ func ruleOne(retailer *string) int {
 
 func ruleTwo(total *float64) int {
 	// 50 points if the total is a round dollar amount with no cents
-	if math.Mod(*total, 0.0) == 0 {
+	if math.Mod(*total, 1.0) == 0 {
 		return 50
 	}
 
@@ -86,23 +86,31 @@ func ruleThree(total *float64) int {
 
 func ruleFour(items *[]Item) int {
 	// 5 points for every two items on the receipt
-	return len(*items) / 2
+	return (len(*items) / 2) * 5
 }
 
 func ruleFive(items *[]Item) int {
 	// If the trimmed length of the item description is a multiple of 3, multiply the price by .2 and round up to the nearest integer. The result is the number of points earned
 	sum := 0
 	for item := range *items {
-		if math.Mod(float64(len((*items)[item].ShortDescription)), 3) == 0 {
-			price, err := strconv.ParseFloat((*items)[item].Price, 64)
-			if err != nil {
-				fmt.Println(err)
-				return 0
-			}
-			sum += int(math.Ceil(price * 0.2))
-		}
+		sum += getScore(&(*items)[item])
 	}
 	return sum
+}
+
+func getScore(item *Item) int {
+	descLen := len((*item).ShortDescription)
+
+	if descLen%3 == 0 {
+		price, err := strconv.ParseFloat(item.Price, 64)
+		if err != nil {
+			fmt.Println(err)
+			return 0
+		}
+		return int(math.Ceil(price * 0.2))
+	}
+
+	return 0
 }
 
 func ruleSix(purchaseDay *int) int {
@@ -114,9 +122,9 @@ func ruleSix(purchaseDay *int) int {
 	return 0
 }
 
-func ruleSeven(purchaseHour int) int {
+func ruleSeven(purchaseHour *int) int {
 	// 10 points if the time of purchase is after 2:00pm and before 4:00pm
-	if purchaseHour > 14 && purchaseHour < 16 {
+	if *purchaseHour > 14 && *purchaseHour < 16 {
 		return 10
 	}
 
@@ -155,7 +163,7 @@ func getPoints(c echo.Context) error {
 	sum += ruleFour(&receipt.Items)
 	sum += ruleFive(&receipt.Items)
 	sum += ruleSix(&day)
-	sum += ruleSeven(purchaseHour)
+	sum += ruleSeven(&purchaseHour)
 
 	// this feels redundant and could be more elegant, but not a priority
 	pointsResponse := new(Points)
