@@ -21,3 +21,8 @@ You can use the endpoints exactly as specified in the documentation! Using a too
 #### Challenge
 
 https://github.com/fetch-rewards/receipt-processor-challenge
+
+#### Future Improvements
+
+- Break code into modules to improve organization
+- Create more tight coupling between the provided yml spec and the structs to encode and decode JSON payloads (I don't have experience doing this in Go and chose to leave it as-is for now)
